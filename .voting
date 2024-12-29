@@ -1,0 +1,58 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class OnlineVotingSystem {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Initialize candidates
+        HashMap<String, Integer> candidates = new HashMap<>();
+        candidates.put("Alice", 0);
+        candidates.put("Bob", 0);
+        candidates.put("Charlie", 0);
+
+        // Voting system
+        System.out.println("Welcome to the Online Voting System!");
+        System.out.println("Candidates: Alice, Bob, Charlie");
+        System.out.println("Type 'STOP' to finish voting.");
+
+        while (true) {
+            System.out.print("Enter your vote: ");
+            String vote = scanner.nextLine();
+
+            // Exit voting
+            if (vote.equalsIgnoreCase("STOP")) {
+                break;
+            }
+
+            // Record vote
+            if (candidates.containsKey(vote)) {
+                candidates.put(vote, candidates.get(vote) + 1);
+                System.out.println("Vote cast successfully for " + vote);
+            } else {
+                System.out.println("Invalid candidate. Please vote again.");
+            }
+        }
+
+        // Display results
+        System.out.println("\nVoting Results:");
+        for (String candidate : candidates.keySet()) {
+            System.out.println(candidate + ": " + candidates.get(candidate) + " votes");
+        }
+
+        // Determine the winner
+        String winner = null;
+        int maxVotes = -1;
+        for (String candidate : candidates.keySet()) {
+            if (candidates.get(candidate) > maxVotes) {
+                maxVotes = candidates.get(candidate);
+                winner = candidate;
+            }
+        }
+
+        System.out.println("\nWinner: " + winner + " with " + maxVotes + " votes!");
+
+        scanner.close();
+    }
+}
